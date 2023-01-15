@@ -1,12 +1,19 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { deleteItem, fetchItems } from '../redux/slices/itemSlice';
 import { setItemModal } from '../redux/slices/modalSlice'
 
 
 const Card = ({item}) => {
   const dispatch = useDispatch()
+  const deleteLoading = useSelector((state) => state.item?.deleteLoading);
+
   const removeItem = async() => {
-   
+    dispatch(deleteItem({id: item?._id})).then((res)=> {
+      console.log(res?.payload?.staus);
+      if(res?.payload?.status) {
+        dispatch(fetchItems())
+      }
+    })
   }
 
   return (
@@ -17,7 +24,7 @@ const Card = ({item}) => {
         <p className='mb-2'>{item?.description}</p>
         <div className="flex justify-end m-4">
             <button className='h-[36px] w-[60px] mx-4 border-[1px] border-brdLight2 font-[500] rounded-[4px]' onClick={() => dispatch(setItemModal({status:true, item}))}>Edit</button>
-            {/* <button disabled={loading} onClick={removeItem} className={`h-[36px] w-[85px] px-3 text-white font-[500] rounded-[4px] ${loading ? "bg-btnDisabled2" : "bg-btnActive"}`}>{loading ? "Deleting" : "Delete"}</button> */}
+            <button disabled={deleteLoading} onClick={removeItem} className={`h-[36px] w-[85px] px-3 text-white font-[500] rounded-[4px] ${deleteLoading ? "bg-btnDisabled2" : "bg-btnActive"}`}>{deleteLoading ? "Deleting" : "Delete"}</button>
         </div>
        
     </div>

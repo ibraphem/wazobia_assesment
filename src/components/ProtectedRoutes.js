@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoutes = ({redirectPath = '/' }) => {
     const token = useSelector((state) => state?.user?.token);
-    console.log(token);
+
     if (!token) {
       return <Navigate to={redirectPath} replace />;
     }

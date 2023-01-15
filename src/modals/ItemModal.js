@@ -1,15 +1,15 @@
-import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../components/Modal";
 import { setItemModal } from "../redux/slices/modalSlice";
 import { itemSchema } from "../utils/formValidationSchema";
+import { fetchItems, saveItem, updateItem } from "../redux/slices/itemSlice";
 
 
 const ItemModal = () => {
   const dispatch = useDispatch();
   const itemModal = useSelector((state) => state.modal?.itemModal);
-  const [isLoading, setIsLoading] = useState(false);
+  const addEditLoading = useSelector((state) => state.item?.addEditLoading);
 
 
   const initialValues = {
@@ -28,7 +28,22 @@ const ItemModal = () => {
   };
 
   const handleSubmit = async (values) => {
- 
+    if (itemModal?.item) {
+      dispatch(updateItem({payload: values, id: itemModal?.item?._id})).then((res)=> {
+        if(res?.payload?.status) {
+          dispatch(fetchItems())
+        }
+      })
+    } else {
+      dispatch(saveItem({payload: values})).then((res)=> {
+        if(res?.payload?.status) {
+          dispatch(fetchItems())
+        }
+      })
+    }
+
+    
+    closeModal()
   };
 
  
@@ -76,11 +91,11 @@ const ItemModal = () => {
                   Cancel
                 </button>
                 <button
-                  disabled={itemModal?.item && isValid && !isLoading ? false : !itemModal?.item && dirty && isValid && !isLoading ? false : true}
+                  disabled={itemModal?.item && isValid && !addEditLoading ? false : !itemModal?.item && dirty && isValid && !addEditLoading ? false : true}
                   type="submit"
                   className={`h-[40px] w-[150px] text-white font-[500] rounded-[4px] ${
-                    itemModal?.item && isValid && !isLoading
-                      ? "bg-btnActive" : !itemModal?.item && dirty && isValid && !isLoading
+                    itemModal?.item && isValid && !addEditLoading
+                      ? "bg-btnActive" : !itemModal?.item && dirty && isValid && !addEditLoading
                       ? "bg-btnActive"
                       : "bg-btnDisabled2"
                   }`}

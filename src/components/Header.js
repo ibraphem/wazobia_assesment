@@ -37,7 +37,7 @@ const Header = ({screenTitle}) => {
               className={
                 logoutBox
                   ? "hidden"
-                  : "cursor-pointer absolute  right-2 w-[95px]  z-10  rounded-[4px] h-[40px]  bg-white py-6 mb-2 text-xs text-black ease-in duration-500"
+                  : "cursor-pointer absolute  right-2 w-[95px]  z-10  rounded-[4px] h-[40px]  bg-white py-4 text-xs text-black ease-in duration-500"
               }
               id="logout-box"
             >

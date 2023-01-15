@@ -6,6 +6,8 @@ const initialState = {
     user: null,
     token: null,
     loading: false,
+    vLoading: false,
+    vData: null,
     error: null
 };
 
@@ -13,6 +15,13 @@ export const registerUser = createAsyncThunk(
     "user/register",
     async (arg) => {
       return httpRequest(`${BASE_URL}/user/signup`, 'post', arg.payload);
+    }
+  );
+
+  export const verifyEmail = createAsyncThunk(
+    "user/verify-email",
+    async (arg) => {
+      return httpRequest(`${BASE_URL}/user/verify/${arg.code}`);
     }
   );
 
@@ -33,6 +42,18 @@ export const registerUser = createAsyncThunk(
         state.loading = false;
         state.user = null;
         state.error = action?.payload?.message;
+      });
+
+      builder.addCase(verifyEmail.pending, (state) => {
+        state.vLoading = true;
+      });
+      builder.addCase(verifyEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.data.user ? action.payload.data.user : state?.user;
+        state.vData = action.payload
+      });
+      builder.addCase(verifyEmail.rejected, (state, action) => {
+        state.loading = false;
       });
     },
     reducers: {

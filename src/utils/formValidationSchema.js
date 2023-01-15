@@ -12,3 +12,13 @@ export const signupSchema = yup.object().shape({
       )
       .required("You must enter password"),
   });
+
+  export const signInSchema = yup.object().shape({
+    email: yup.string().email("Wrong email format").required("Email is required"),
+    password: yup.string().required("You must enter password"),
+  });
+
+  export const itemSchema = yup.object().shape({
+    name: yup.string().required("Email is required"),
+    description: yup.string().required("You must enter password"),
+  });

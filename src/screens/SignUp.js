@@ -3,15 +3,15 @@ import { Field, Form, Formik } from "formik";
 import { signupSchema } from "../utils/formValidationSchema";
 import eye from "../assets/images/eye.png";
 import eyeslash from "../assets/images/eyeslash.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/slices/userSlice';
+import Alert from '../components/Alert';
 
 const SignUp = () => {
   const dispatch = useDispatch()
-  const user = useSelector((state) => state?.user?.user);
-
-  console.log(user);
+  const navigate = useNavigate()
+  const auth = useSelector((state) => state?.user);
 
     const initialValues = {
         first_name: "",
@@ -21,9 +21,14 @@ const SignUp = () => {
       };
     
       const handleSubmit = async(values) => {
-        console.log(values);
-        dispatch(registerUser({payload: values}))
+        dispatch(registerUser({payload: values})).then((res) => {
+          if(res?.payload?.data?.token){
+            navigate("/dashboard")
+          }
+        })
       };
+
+
     return (
         <Container>
         <h1 className="text-center font-bold text-xl">Create an Account</h1>
@@ -33,7 +38,7 @@ const SignUp = () => {
             <Link to="/">Log in</Link>
           </span>
         </p>
-      
+        {!auth?.loading && auth?.error && <Alert type="danger" msg={auth?.error}/>}
         <Formik
           enableReinitialize
           initialValues={initialValues}
@@ -185,13 +190,13 @@ const SignUp = () => {
               </div>
   
               <button
-                disabled={!isValid || !dirty}
+                disabled={!isValid || !dirty || auth?.loading}
                 type="submit"
                 className={`h-[48px] font-bold rounded-[4px] w-full text-white ${
-                  !dirty || !isValid ? "bg-btnDisabled" : "bg-btnActive"
+                  !dirty || !isValid || auth?.loading ? "bg-btnDisabled" : "bg-btnActive"
                 }`}
               >
-                Sign Up
+                {!auth?.loading ? "Sign Up" : "Signing up... Please wait"}
               </button>
             </Form>
           )}

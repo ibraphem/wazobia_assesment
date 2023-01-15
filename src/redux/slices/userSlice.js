@@ -6,7 +6,7 @@ const initialState = {
     user: null,
     token: null,
     loading: false,
-    error: ""
+    error: null
 };
 
 export const registerUser = createAsyncThunk(
@@ -27,7 +27,7 @@ export const registerUser = createAsyncThunk(
         state.loading = false;
         state.user = action.payload?.data?.user;
         state.token = action.payload?.data?.token;
-        state.error = "";
+        state.error = action.payload?.status === false ? action?.payload?.message : "";
       });
       builder.addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
@@ -35,6 +35,13 @@ export const registerUser = createAsyncThunk(
         state.error = action?.payload?.message;
       });
     },
+    reducers: {
+      removeUser: (state) => {
+          state.user = null
+          state.token = null
+      }
+  }
   });
 
   export default userSlice.reducer;
+  export const {removeUser} = userSlice.actions

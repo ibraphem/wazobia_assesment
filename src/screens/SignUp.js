@@ -4,8 +4,15 @@ import { signupSchema } from "../utils/formValidationSchema";
 import eye from "../assets/images/eye.png";
 import eyeslash from "../assets/images/eyeslash.png";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser } from '../redux/slices/userSlice';
 
 const SignUp = () => {
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state?.user?.user);
+
+  console.log(user);
+
     const initialValues = {
         first_name: "",
         last_name: "",
@@ -15,6 +22,7 @@ const SignUp = () => {
     
       const handleSubmit = async(values) => {
         console.log(values);
+        dispatch(registerUser({payload: values}))
       };
     return (
         <Container>

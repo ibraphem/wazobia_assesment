@@ -11,3 +11,20 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
+.checkbox{
+  width: 0.7em;
+  height: 0.7em;
+  background-color: white;
+  border-radius: 50%;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.checkbox:checked{
+background-color: #07982f;
+}
+

@@ -172,14 +172,14 @@ const SignUp = () => {
                     <input
                       type="checkbox"
                       className="mr-2 h-[10] w-[10px] checkbox"
-                      checked={/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(
+                      checked={/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(
                         values?.password
                       )}
                     />
                     <label
                       htmlFor=""
                       className={
-                        /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(
+                        /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/.test(
                           values?.password
                         )
                           ? "text-sm text-success"

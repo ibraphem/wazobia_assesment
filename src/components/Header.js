@@ -32,7 +32,7 @@ const Header = ({screenTitle}) => {
         <div className="flex items-center" ref={ref}  onClick={handleLogoutToggle}>
           <p className="font-[500] cursor-pointer" alt="">{user?.first_name} {user?.last_name}</p>
           <div className="ml-2 relative cursor-pointer">
-            <img src={dropdown}  />
+            <img src={dropdown} alt="dropdown" />
             <div
               className={
                 logoutBox

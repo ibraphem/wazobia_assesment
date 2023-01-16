@@ -19,7 +19,7 @@ const Verify = () => {
 
   useEffect(() => {
     dispatch(verifyEmail(params))
-  }, [params])
+  }, [params, dispatch])
 
   const navigate = useNavigate()
   

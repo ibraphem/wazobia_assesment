@@ -19,7 +19,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         dispatch(fetchItems())
-    }, [])
+    }, [dispatch])
 
     return (
         <>
@@ -51,7 +51,7 @@ const Dashboard = () => {
             <img
               onClick={() => dispatch(setItemModal({status:true, item: null}))}
               src={add_filled}
-              alt=""
+              alt="add"
               className="h-10 w-10 cursor-pointer block my-10 ml-auto mr-8  md:absolute right-20 bottom-10"
             />
     

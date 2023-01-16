@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
 
 const Modal = ({ children, isOpen, closeModal }) => {
     if (!isOpen) return null
     const closeModalFromBg = (e) => {
-        if (e.target.id == 'bg') closeModal()
+        if (e.target.id === 'bg') closeModal()
     }
   return (
     <div

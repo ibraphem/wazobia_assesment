@@ -32,7 +32,7 @@ const Login = () => {
       navigate("/dashboard")
     }
    
-  }, [auth?.token])
+  }, [auth?.token, navigate])
   
 
   return (

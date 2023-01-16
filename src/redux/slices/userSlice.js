@@ -7,8 +7,10 @@ const initialState = {
     token: null,
     loading: false,
     vLoading: false,
-    vData: null,
-    error: null
+    vData: "",
+    error: null,
+    sLoading: false,
+    sError: null
 };
 
 export const registerUser = createAsyncThunk(
@@ -22,6 +24,13 @@ export const registerUser = createAsyncThunk(
     "user/verify-email",
     async (arg) => {
       return httpRequest(`${BASE_URL}/user/verify/${arg.code}`);
+    }
+  );
+
+  export const signin = createAsyncThunk(
+    "user/signin",
+    async (arg) => {
+      return httpRequest(`${BASE_URL}/user/signin`, 'post', arg.payload);
     }
   );
 
@@ -48,12 +57,29 @@ export const registerUser = createAsyncThunk(
         state.vLoading = true;
       });
       builder.addCase(verifyEmail.fulfilled, (state, action) => {
+        console.log(action?.payload);
         state.loading = false;
-        state.user = action.payload.data.user ? action.payload.data.user : state?.user;
-        state.vData = action.payload
+        state.user = action.payload?.data?.user ? action.payload?.data?.user : state.user;
+        state.vData = action?.payload
       });
       builder.addCase(verifyEmail.rejected, (state, action) => {
         state.loading = false;
+      });
+
+
+      builder.addCase(signin.pending, (state) => {
+        state.sLoading = true;
+      });
+      builder.addCase(signin.fulfilled, (state, action) => {
+        state.sLoading = false;
+        state.user = action.payload?.data?.user;
+        state.token = action.payload?.data?.token;
+        state.sError = action.payload?.status === false ? action?.payload?.message : "";
+      });
+      builder.addCase(signin.rejected, (state, action) => {
+        state.sLoading = false;
+        state.user = null;
+        state.sError = action?.payload?.message;
       });
     },
     reducers: {

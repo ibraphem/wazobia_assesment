@@ -7,11 +7,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../redux/slices/userSlice';
 import Alert from '../components/Alert';
+import { setShowPassword } from "../redux/slices/miscSlice";
 
 const SignUp = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const auth = useSelector((state) => state?.user);
+  const showPassword = useSelector((state) => state?.misc?.showPassword);
 
     const initialValues = {
         first_name: "",
@@ -101,14 +103,15 @@ const SignUp = () => {
                 <div className="px-2 flex justify-between border-[1px] border-brdlight h-[40px] w-full p-2  rounded-[4px]">
                 <Field
                     name="password"
-                 type="password"
+                    type={showPassword.status ? "text" : "password"}
                     placeholder="Type your password here"
-                    className="w-[80%] h-full py-2 outline-none"
+                    className="w-[90%] h-full py-2 outline-none"
                   />
                   <img
-                    src={eye}
+                    src={showPassword?.status ? eyeslash : eye}
                     alt=""
                     className="cursor-pointer h-[20px] w-[20px] "
+                    onClick={() => dispatch(setShowPassword({status: !showPassword?.status}))}
                     
                   />
                 </div>

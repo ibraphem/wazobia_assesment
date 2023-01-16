@@ -15,8 +15,6 @@ const Dashboard = () => {
     const loading = useSelector((state) => state?.items?.loading);
     const user = useSelector((state) => state?.user?.user);
 
-    console.log(items);
-
     useEffect(() => {
         dispatch(fetchItems())
     }, [dispatch])

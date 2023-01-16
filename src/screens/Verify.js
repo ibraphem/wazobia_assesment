@@ -15,7 +15,7 @@ const Verify = () => {
 
   const verify = useSelector((state) => state?.user);
 
-  console.log(verify);
+  console.log(verify?.loading);
 
   useEffect(() => {
     dispatch(verifyEmail(params))

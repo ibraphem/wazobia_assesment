@@ -15,6 +15,7 @@ const Login = () => {
   const auth = useSelector((state) => state?.user);
   const showPassword = useSelector((state) => state?.misc?.showPassword);
 
+
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -88,13 +89,13 @@ const Login = () => {
               </div>
             </div>
             <button
-              disabled={!isValid || !dirty || auth?.sloading}
+              disabled={!isValid || !dirty || auth?.sLoading}
               type="submit"
               className={`h-[48px] font-bold rounded-[4px] w-full text-white ${
-                !dirty || !isValid || auth?.sloading ? "bg-btnDisabled" : "bg-btnActive"
+                !dirty || !isValid || auth?.sLoading ? "bg-btnDisabled" : "bg-btnActive"
               }`}
             >
-              {auth?.sloading ? "Signing in ... Please wait" : "Log in"}
+              {auth?.sLoading ? "Signing in ... Please wait" : "Log in"}
             </button>
           </Form>
         )}

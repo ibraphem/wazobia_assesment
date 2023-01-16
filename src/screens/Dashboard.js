@@ -53,7 +53,7 @@ const Dashboard = () => {
               className="h-10 w-10 cursor-pointer block my-10 ml-auto mr-8  md:absolute right-20 bottom-10"
             />
     
-            <div className="h-10"></div>
+            {/* <div className="h-10"></div> */}
     
         </>
     );
